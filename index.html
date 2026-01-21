@@ -109,12 +109,20 @@
 
     <script type="text/babel">
         const { useState } = React;
-        
-        // Initialize Supabase with CORRECT credentials
-        const supabase = window.supabase.createClient(
-            'https://hfchmjmhkiqsibxtiwsk.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2htam1oa2lxc2lieHRpd3NrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcyOTY5NTQsImV4cCI6MjA1Mjg3Mjk1NH0.WMD4rdIiqCeNX8qYsOnelA_zog_foYo'
-        );
+        <script type="text/babel">
+  const { useState } = React;
+
+  // ✅ Initialize Supabase (FRONTEND SAFE)
+  const SUPABASE_URL = "https://hfchmjmhkiqsibxtiwsk.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_XXXXXXXXXXXXXXXXXXXX";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  console.log("✅ Supabase connected (publishable key)");
+</script>        
 
         console.log('✅ Supabase connected:', 'hfchmjmhkiqsibxtiwsk.supabase.co');
 
