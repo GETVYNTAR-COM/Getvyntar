@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYNTAR Marketplace Intelligence - Join the First 20</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #000; color: #0f0; }
+        .glow { text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; }
+        .matrix-bg { background: linear-gradient(180deg, #000 0%, #001a00 100%); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(
+            'https://hfchmjmhkiqsibxtiwsk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2htam1oa2lxc2lieHRpd3NrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcyOTY5NTQsImV4cCI6MjA1Mjg3Mjk1NH0.WMD4rdIiqCeNX8qYsOnelA_zog_foYo'
+        );
+
+        function FounderSignUpForm() {
+            const [formData, setFormData] = useState({
+                name: '',
+                email: '',
+                phone: '',
+                marketplace: '',
+                revenue: '',
+                painPoint: ''
+            });
+            const [status, setStatus] = useState('idle');
+            const [message, setMessage] = useState('');
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setStatus('loading');
+                
+                try {
+                    const { error } = await supabase
+                        .from('founder_signups')
+                        .insert([{
+                            name: formData.name,
+                            email: formData.email,
+                            phone: formData.phone || null,
+                            current_marketplace: formData.marketplace,
+                            monthly_revenue: formData.revenue,
+                            biggest_pain_point: formData.painPoint,
+                            source: 'founder_edition',
+                            status: 'new'
+                        }]);
+
+                    if (error) throw error;
+
+                    setStatus('success');
+                    setMessage('🎉 Welcome to the Founder Edition! Check your email for next steps.');
+                    setFormData({ name: '', email: '', phone: '', marketplace: '', revenue: '', painPoint: '' });
+                    
+                    setTimeout(() => {
+                        setStatus('idle');
+                        setMessage('');
+                    }, 5000);
+                } catch (error) {
+                    setStatus('error');
+                    setMessage('❌ ' + (error.message || 'Something went wrong. Please try again.'));
+                    
+                    setTimeout(() => {
+                        setStatus('idle');
+                        setMessage('');
+                    }, 5000);
+                }
+            };
+
+            const handleChange = (e) => {
+                setFormData(prev => ({
+                    ...prev,
+                    [e.target.name]: e.target.value
+                }));
+            };
+
+            return (
+                <div className="max-w-2xl mx-auto p-6 bg-black border border-green-500/30 rounded-lg">
+                    <div className="mb-6">
+                        <h2 className="text-3xl font-bold text-green-400 mb-2 glow">
+                            Founder Edition Access
+                        </h2>
+                        <p className="text-green-300/70">
+                            First 20 members get £49/month forever. Lock in your rate now.
+                        </p>
+                    </div>
+
+                    {message && (
+                        <div className={`mb-6 p-4 rounded border ${
+                            status === 'success' 
+                                ? 'bg-green-500/20 border-green-500 text-green-400' 
+                                : 'bg-red-500/20 border-red-500 text-red-400'
+                        }`}>
+                            {message}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Full Name *
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none"
+                                placeholder="John Smith"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Email Address *
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none"
+                                placeholder="john@example.com"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Phone Number (Optional)
+                            </label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none"
+                                placeholder="07123 456789"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Where do you sell? *
+                            </label>
+                            <select
+                                name="marketplace"
+                                value={formData.marketplace}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none"
+                            >
+                                <option value="">Select platform...</option>
+                                <option value="facebook_marketplace">Facebook Marketplace</option>
+                                <option value="ebay">eBay</option>
+                                <option value="gumtree">Gumtree</option>
+                                <option value="vinted">Vinted</option>
+                                <option value="depop">Depop</option>
+                                <option value="multiple">Multiple Platforms</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Monthly Revenue (Estimate) *
+                            </label>
+                            <select
+                                name="revenue"
+                                value={formData.revenue}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none"
+                            >
+                                <option value="">Select range...</option>
+                                <option value="0-200">£0 - £200</option>
+                                <option value="200-500">£200 - £500</option>
+                                <option value="500-1000">£500 - £1,000</option>
+                                <option value="1000-2000">£1,000 - £2,000</option>
+                                <option value="2000+">£2,000+</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-green-400 mb-2 text-sm font-medium">
+                                Biggest Pain Point *
+                            </label>
+                            <textarea
+                                name="painPoint"
+                                value={formData.painPoint}
+                                onChange={handleChange}
+                                required
+                                rows={4}
+                                className="w-full px-4 py-2 bg-black border border-green-500/50 rounded text-green-400 focus:border-green-400 focus:outline-none resize-none"
+                                placeholder="What's your biggest challenge as a marketplace seller?"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={status === 'loading'}
+                            className="w-full py-3 px-6 bg-green-500 hover:bg-green-400 text-black font-bold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {status === 'loading' ? 'Securing Your Spot...' : 'Claim Founder Rate (£49/mo)'}
+                        </button>
+                    </form>
+
+                    <p className="mt-4 text-xs text-green-300/50 text-center">
+                        No commitment. Cancel anytime. 30-day free trial included.
+                    </p>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div className="matrix-bg min-h-screen">
+                    {/* Hero Section */}
+                    <div className="container mx-auto px-4 py-20">
+                        <div className="text-center mb-20">
+                            <h1 className="text-6xl font-bold text-green-400 mb-4 glow">
+                                VYNTAR
+                            </h1>
+                            <p className="text-2xl text-green-300 mb-2">
+                                Marketplace Intelligence
+                            </p>
+                            <p className="text-xl text-green-300/70">
+                                The first AI intelligence layer for Facebook Marketplace sellers
+                            </p>
+                        </div>
+
+                        {/* Problem Section */}
+                        <div className="max-w-4xl mx-auto mb-20 p-8 border border-green-500/30 rounded-lg">
+                            <h2 className="text-3xl font-bold text-green-400 mb-6">
+                                Stop Losing Sales to Chaos
+                            </h2>
+                            <div className="space-y-4 text-green-300">
+                                <p>❌ 50+ conversations scattered across Messenger</p>
+                                <p>❌ Can't tell who's serious vs time-wasters</p>
+                                <p>❌ Forget conversation context when buyers return</p>
+                                <p>❌ No data on what's actually converting</p>
+                                <p>❌ Miss follow-ups = miss sales</p>
+                            </div>
+                        </div>
+
+                        {/* Solution Section */}
+                        <div className="max-w-4xl mx-auto mb-20 p-8 border border-green-500/30 rounded-lg">
+                            <h2 className="text-3xl font-bold text-green-400 mb-6">
+                                Your AI Intelligence Layer
+                            </h2>
+                            <div className="space-y-4 text-green-300">
+                                <p>✅ Track all conversations in one place</p>
+                                <p>✅ AI scores buyer intent (hot/warm/cold)</p>
+                                <p>✅ Smart follow-up reminders</p>
+                                <p>✅ Analytics that matter (conversion rates, response times)</p>
+                                <p>✅ AI-suggested responses for faster replies</p>
+                            </div>
+                        </div>
+
+                        {/* Founder Edition */}
+                        <div className="mb-20">
+                            <div className="text-center mb-10">
+                                <h2 className="text-4xl font-bold text-green-400 mb-4 glow">
+                                    Join the First 20
+                                </h2>
+                                <p className="text-xl text-green-300">
+                                    Get £49/month FOREVER. Normal price: £20/month after launch.
+                                </p>
+                            </div>
+                            <FounderSignUpForm />
+                        </div>
+
+                        {/* Footer */}
+                        <div className="text-center text-green-300/50 text-sm">
+                            <p>© 2026 VYNTAR. Built for UK Marketplace sellers.</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
