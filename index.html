@@ -110,13 +110,13 @@
     <script type="text/babel">
         const { useState } = React;
         
-        // Initialize Supabase with CORRECT credentials
-        const supabase = window.supabase.createClient(
-            'https://hfchmjmhkiqsibxtiwsk.supabase.co',
-            'sb_publishable_WMD4rdIiqCeNX8qYsOnelA_zog_foYo
-        console.log('✅ Supabase connected:', 'hfchmjmhkiqsibxtiwsk.supabase.co');
+        // Initialize Supabase (PUBLIC key only)
+const supabase = window.supabase.createClient(
+  "https://hfchmjmhkiqsibxtiwsk.supabase.co",
+  "sb_publishable_WMD4rdIiqCeNX8qYs0ne1A_zog_foYo"
+);
 
-        // SVG Icons
+console.log("✅ Supabase connected");        // SVG Icons
         const ArrowRight = () => (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
