@@ -112,11 +112,12 @@
         
         // Initialize Supabase with CORRECT credentials
         const supabase = window.supabase.createClient(
-    'https://hfchmjmhkiqsibxtiwsk.supabase.co',
-    'sb_publishable_WMD4rdIiqCeNX8qYsOnelA_zog_foYo'
-);
-console.log('✅ Supabase connected:', 'hfchmjmhkiqsibxtiwsk.supabase.co');
-        
+            'https://hfchmjmhkiqsibxtiwsk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2htam1oa2lxc2lieHRpd3NrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcyOTY5NTQsImV4cCI6MjA1Mjg3Mjk1NH0.WMD4rdIiqCeNX8qYsOnelA_zog_foYo'
+        );
+
+        console.log('✅ Supabase connected:', 'hfchmjmhkiqsibxtiwsk.supabase.co');
+
         // SVG Icons
         const ArrowRight = () => (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,36 +155,60 @@ console.log('✅ Supabase connected:', 'hfchmjmhkiqsibxtiwsk.supabase.co');
             const [status, setStatus] = useState('idle');
             const [message, setMessage] = useState('');
 
+            // Updated handleSubmit: normalize email and use upsert to avoid duplicate-key errors
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 setStatus('loading');
-                
+
+                // Normalize email: remove whitespace and lowercase
+                const normalizedEmail = (formData.email || '').trim().toLowerCase();
+
+                if (!normalizedEmail) {
+                    setStatus('error');
+                    setMessage('❌ Please provide a valid email address.');
+                    setTimeout(() => { setStatus('idle'); setMessage(''); }, 4000);
+                    return;
+                }
+
+                const payload = {
+                    name: (formData.name || '').trim(),
+                    email: normalizedEmail,
+                    phone: formData.phone?.trim() || null,
+                    current_marketplace: formData.marketplace,
+                    monthly_revenue: formData.revenue,
+                    biggest_pain_point: formData.painPoint,
+                    source: 'founder_edition',
+                    status: 'new'
+                };
+
                 try {
-                    console.log('🚀 Submitting to Supabase...');
-                    
+                    console.log('🚀 Submitting to Supabase (normalized email):', normalizedEmail);
+
+                    // Use upsert so duplicate emails do not cause a hard DB error.
+                    // onConflict: 'email' requires a UNIQUE constraint on the email column in the DB.
                     const { data, error } = await supabase
                         .from('founder_signups')
-                        .insert([{
-                            name: formData.name,
-                            email: formData.email,
-                            phone: formData.phone || null,
-                            current_marketplace: formData.marketplace,
-                            monthly_revenue: formData.revenue,
-                            biggest_pain_point: formData.painPoint,
-                            source: 'founder_edition',
-                            status: 'new'
-                        }]);
+                        .upsert([payload], { onConflict: 'email' });
 
                     if (error) {
                         console.error('❌ Supabase error:', error);
-                        throw error;
+                        const msg = (error?.message || '').toLowerCase();
+                        if (msg.includes('duplicate') || error?.code === '23505' || error?.status === 409) {
+                            setStatus('error');
+                            setMessage('❌ This email is already registered. Check your inbox or contact support.');
+                        } else {
+                            setStatus('error');
+                            setMessage('❌ ' + (error.message || 'Something went wrong. Please try again.'));
+                        }
+                        setTimeout(() => { setStatus('idle'); setMessage(''); }, 5000);
+                        return;
                     }
 
                     console.log('✅ Success!', data);
                     setStatus('success');
                     setMessage('🎉 Welcome to the Founder Edition! Check your email for next steps.');
                     setFormData({ name: '', email: '', phone: '', marketplace: '', revenue: '', painPoint: '' });
-                    
+
                     setTimeout(() => {
                         setStatus('idle');
                         setMessage('');
