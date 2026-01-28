@@ -1,596 +1,266 @@
-<!-- redeploy --><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VYNTAR Marketplace Intelligence - Join the First 20</title>
-    <meta property="og:title" content="VYNTAR - AI Intelligence for Marketplace Sellers">
-    <meta property="og:description" content="Stop losing sales to chaos. Track conversations, score buyers, never miss a follow-up.">
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <title>VYNTAR - Marketplace Intelligence for Facebook Sellers</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: #0f0;
-            overflow-x: hidden;
-        }
-        
-        .glow {
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8),
-                         0 0 20px rgba(0, 255, 0, 0.6),
-                         0 0 30px rgba(0, 255, 0, 0.4);
-        }
-        
-        .glow-border {
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3),
-                        inset 0 0 20px rgba(0, 255, 0, 0.1);
-        }
-        
-        .matrix-bg {
-            background: linear-gradient(180deg, #000 0%, #001a00 50%, #000 100%);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
-        }
-        
-        .card {
-            background: rgba(0, 26, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            border-color: rgba(0, 255, 0, 0.5);
-            transform: translateY(-5px);
-        }
-        
-        input, select, textarea {
-            background: rgba(0, 0, 0, 0.8) !important;
-            border: 1px solid rgba(0, 255, 0, 0.3) !important;
-            color: #0f0 !important;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            border-color: #0f0 !important;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important;
-            outline: none !important;
-        }
-        
-        ::placeholder {
-            color: rgba(0, 255, 0, 0.5) !important;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
-<body>
-    <div id="root"></div>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center">
+                <svg class="w-10 h-10 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <h1 class="text-3xl font-bold text-gray-900">VYNTAR</h1>
+            </div>
+        </div>
+    </header>
 
-    <script type="text/babel">
-        const { useState } = React;
-        
-        // Initialize Supabase (PUBLIC key only)
-const supabase = window.supabase.createClient(
-  "https://hfchmjmhkiqsibxtiwsk.supabase.co",
-  "sb_publishable_WMD4rdIiqCeNX8qYs0ne1A_zog_foYo"
-);
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Column - Hero Content -->
+            <div>
+                <div class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                    🚀 Founder's Edition - Limited Access
+                </div>
+                
+                <h2 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                    The First Intelligence Layer for Facebook Marketplace Sellers
+                </h2>
+                
+                <p class="text-xl text-gray-600 mb-8">
+                    Stop losing leads in messenger chaos. VYNTAR gives you real-time lead scoring, status tracking, and analytics to turn conversations into conversions.
+                </p>
 
-console.log("✅ Supabase connected");        // SVG Icons
-        const ArrowRight = () => (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-        );
-
-        const CheckCircle = () => (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        );
-
-        const AlertCircle = () => (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        );
-
-        const ChevronDown = () => (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-        );
-
-        function FounderSignUpForm() {
-            const [formData, setFormData] = useState({
-                name: '',
-                email: '',
-                phone: '',
-                marketplace: '',
-                revenue: '',
-                painPoint: ''
-            });
-            const [status, setStatus] = useState('idle');
-            const [message, setMessage] = useState('');
-
-            // Updated handleSubmit: normalize email and use upsert to avoid duplicate-key errors
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setStatus('loading');
-
-                // Normalize email: remove whitespace and lowercase
-                const normalizedEmail = (formData.email || '').trim().toLowerCase();
-
-                if (!normalizedEmail) {
-                    setStatus('error');
-                    setMessage('❌ Please provide a valid email address.');
-                    setTimeout(() => { setStatus('idle'); setMessage(''); }, 4000);
-                    return;
-                }
-
-                const payload = {
-                    name: (formData.name || '').trim(),
-                    email: normalizedEmail,
-                    phone: formData.phone?.trim() || null,
-                    current_marketplace: formData.marketplace,
-                    monthly_revenue: formData.revenue,
-                    biggest_pain_point: formData.painPoint,
-                    source: 'founder_edition',
-                    status: 'new'
-                };
-
-                try {
-                    console.log('🚀 Submitting to Supabase (normalized email):', normalizedEmail);
-
-                    // Use upsert so duplicate emails do not cause a hard DB error.
-                    // onConflict: 'email' requires a UNIQUE constraint on the email column in the DB.
-                    const { data, error } = await supabase
-                        .from('founder_signups')
-                        .upsert([payload], { onConflict: 'email' });
-
-                    if (error) {
-                        console.error('❌ Supabase error:', error);
-                        const msg = (error?.message || '').toLowerCase();
-                        if (msg.includes('duplicate') || error?.code === '23505' || error?.status === 409) {
-                            setStatus('error');
-                            setMessage('❌ This email is already registered. Check your inbox or contact support.');
-                        } else {
-                            setStatus('error');
-                            setMessage('❌ ' + (error.message || 'Something went wrong. Please try again.'));
-                        }
-                        setTimeout(() => { setStatus('idle'); setMessage(''); }, 5000);
-                        return;
-                    }
-
-                    console.log('✅ Success!', data);
-                    setStatus('success');
-                    setMessage('🎉 Welcome to the Founder Edition! Check your email for next steps.');
-                    setFormData({ name: '', email: '', phone: '', marketplace: '', revenue: '', painPoint: '' });
-
-                    setTimeout(() => {
-                        setStatus('idle');
-                        setMessage('');
-                    }, 5000);
-                } catch (error) {
-                    console.error('❌ Full error:', error);
-                    setStatus('error');
-                    setMessage('❌ ' + (error.message || 'Something went wrong. Please try again.'));
+                <!-- Features -->
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Automatic Lead Capture</h3>
+                            <p class="text-gray-600">Every Facebook Messenger inquiry automatically synced</p>
+                        </div>
+                    </div>
                     
-                    setTimeout(() => {
-                        setStatus('idle');
-                        setMessage('');
-                    }, 5000);
-                }
-            };
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Smart Lead Scoring</h3>
+                            <p class="text-gray-600">AI-powered scoring tells you which leads to prioritize</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Real-Time Dashboard</h3>
+                            <p class="text-gray-600">Track status, manage follow-ups, never miss a sale</p>
+                        </div>
+                    </div>
+                </div>
 
-            const handleChange = (e) => {
-                setFormData(prev => ({
-                    ...prev,
-                    [e.target.name]: e.target.value
-                }));
-            };
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 border-t border-gray-200 pt-8">
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600">£5B</div>
+                        <div class="text-sm text-gray-600">UK Marketplace Value</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600">0</div>
+                        <div class="text-sm text-gray-600">Direct Competitors</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600">£49</div>
+                        <div class="text-sm text-gray-600">/month Founder Price</div>
+                    </div>
+                </div>
+            </div>
 
-            return (
-                <div className="max-w-2xl mx-auto p-8 card rounded-xl glow-border fade-in">
-                    <div className="mb-8">
-                        <h2 className="text-4xl font-bold text-green-400 mb-3 glow">
-                            Founder Edition Access
-                        </h2>
-                        <p className="text-lg text-green-300/80">
-                            First 20 members get <span className="font-bold text-green-400">£49/month forever</span>. Lock in your rate now.
-                        </p>
+            <!-- Right Column - Signup Form -->
+            <div class="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Join the Founder's Edition</h3>
+                    <p class="text-gray-600">Lock in lifetime £49/month pricing. Limited to first 20 sellers.</p>
+                </div>
+
+                <form id="founderForm" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Full Name <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="founderName" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="Your name">
                     </div>
 
-                    {message && (
-                        <div className={`mb-6 p-4 rounded-lg border flex items-start gap-3 ${
-                            status === 'success' 
-                                ? 'bg-green-500/20 border-green-500 text-green-400' 
-                                : 'bg-red-500/20 border-red-500 text-red-400'
-                        }`}>
-                            {status === 'success' ? <CheckCircle /> : <AlertCircle />}
-                            <span>{message}</span>
-                        </div>
-                    )}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Email Address <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="founderEmail" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="you@example.com">
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Full Name *
-                            </label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-3 rounded-lg"
-                                placeholder="John Smith"
-                            />
-                        </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Phone Number <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="founderPhone" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="07000 000000">
+                    </div>
 
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Email Address *
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-3 rounded-lg"
-                                placeholder="john@example.com"
-                            />
-                        </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Tell us about your business
+                        </label>
+                        <textarea 
+                            id="founderMessage" 
+                            rows="4"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="What do you sell on Facebook Marketplace? How many leads per week?"></textarea>
+                    </div>
 
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Phone Number (Optional)
-                            </label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-lg"
-                                placeholder="07123 456789"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Where do you sell? *
-                            </label>
-                            <select
-                                name="marketplace"
-                                value={formData.marketplace}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-3 rounded-lg"
-                            >
-                                <option value="">Select platform...</option>
-                                <option value="facebook_marketplace">Facebook Marketplace</option>
-                                <option value="ebay">eBay</option>
-                                <option value="gumtree">Gumtree</option>
-                                <option value="vinted">Vinted</option>
-                                <option value="depop">Depop</option>
-                                <option value="multiple">Multiple Platforms</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Monthly Revenue (Estimate) *
-                            </label>
-                            <select
-                                name="revenue"
-                                value={formData.revenue}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-3 rounded-lg"
-                            >
-                                <option value="">Select range...</option>
-                                <option value="0-200">£0 - £200</option>
-                                <option value="200-500">£200 - £500</option>
-                                <option value="500-1000">£500 - £1,000</option>
-                                <option value="1000-2000">£1,000 - £2,000</option>
-                                <option value="2000+">£2,000+</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label className="block text-green-400 mb-2 text-sm font-semibold">
-                                Biggest Pain Point *
-                            </label>
-                            <textarea
-                                name="painPoint"
-                                value={formData.painPoint}
-                                onChange={handleChange}
-                                required
-                                rows={4}
-                                className="w-full px-4 py-3 rounded-lg resize-none"
-                                placeholder="What's your biggest challenge as a marketplace seller?"
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={status === 'loading'}
-                            className="w-full py-4 px-6 btn-primary text-black font-bold text-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                        >
-                            {status === 'loading' ? 'Securing Your Spot...' : (
-                                <>
-                                    Claim Founder Rate (£49/mo)
-                                    <ArrowRight />
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    <p className="mt-6 text-sm text-green-300/60 text-center">
-                        No commitment. Cancel anytime. 30-day free trial included.
-                    </p>
-                </div>
-            );
-        }
-
-        function FAQItem({ question, answer }) {
-            const [isOpen, setIsOpen] = useState(false);
-
-            return (
-                <div className="border-b border-green-500/20 pb-4">
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="w-full flex items-center justify-between text-left py-4 text-green-400 hover:text-green-300 transition-colors"
-                    >
-                        <span className="font-semibold text-lg">{question}</span>
-                        <span className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}>
-                            <ChevronDown />
-                        </span>
+                    <button 
+                        type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg">
+                        Secure My Founder Access
                     </button>
-                    {isOpen && (
-                        <p className="text-green-300/80 pb-4 leading-relaxed">
-                            {answer}
-                        </p>
-                    )}
-                </div>
-            );
-        }
 
-        function App() {
-            const faqs = [
-                {
-                    question: "How does the 30-day free trial work?",
-                    answer: "Sign up today and use all features completely free for 30 days. No credit card required. Cancel anytime during the trial with no charges."
-                },
-                {
-                    question: "What happens after the first 20 founders?",
-                    answer: "The price increases to £20/month for all new members. Founder members keep their £49/month rate forever—even if you pause and restart your subscription."
-                },
-                {
-                    question: "Do you integrate with Facebook Messenger?",
-                    answer: "Yes! We're launching with CSV import first, with direct Messenger integration coming in Month 2. Founder members get early access to all new features."
-                },
-                {
-                    question: "Is my data secure?",
-                    answer: "Absolutely. We use bank-level encryption, never share your data, and comply with UK GDPR regulations. Your conversations stay private."
-                },
-                {
-                    question: "Can I cancel anytime?",
-                    answer: "Yes. No contracts, no commitments. Cancel with one click from your dashboard. Your data exports are always available."
-                }
-            ];
+                    <p class="text-xs text-gray-500 text-center">
+                        No credit card required. We'll contact you within 24 hours.
+                    </p>
+                </form>
 
-            return (
-                <div className="matrix-bg min-h-screen">
-                    {/* Hero Section */}
-                    <div className="container mx-auto px-4 py-20 lg:py-32">
-                        <div className="text-center mb-20 fade-in">
-                            <div className="inline-block mb-6 px-6 py-2 border border-green-500/50 rounded-full text-green-400 text-sm font-semibold glow-border">
-                                FOUNDER'S EDITION
-                            </div>
-                            <h1 className="text-6xl lg:text-8xl font-bold mb-6">
-                                <span className="gradient-text glow">VYNTAR</span>
-                            </h1>
-                            <p className="text-3xl lg:text-4xl text-green-400 mb-4 font-light">
-                                Marketplace Intelligence
-                            </p>
-                            <p className="text-xl lg:text-2xl text-green-300/70 max-w-3xl mx-auto leading-relaxed">
-                                The first AI intelligence layer for Facebook Marketplace sellers
-                            </p>
-                        </div>
-
-                        {/* Problem Section */}
-                        <div className="max-w-5xl mx-auto mb-32 fade-in">
-                            <div className="card p-10 rounded-2xl">
-                                <h2 className="text-4xl lg:text-5xl font-bold text-green-400 mb-8 glow">
-                                    Stop Losing Sales to Chaos
-                                </h2>
-                                <div className="grid md:grid-cols-2 gap-6 text-lg">
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-red-500 text-2xl">❌</span>
-                                        <p className="text-green-300/90">50+ conversations scattered across Messenger</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-red-500 text-2xl">❌</span>
-                                        <p className="text-green-300/90">Can't tell who's serious vs time-wasters</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-red-500 text-2xl">❌</span>
-                                        <p className="text-green-300/90">Forget conversation context when buyers return</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-red-500 text-2xl">❌</span>
-                                        <p className="text-green-300/90">No data on what's actually converting</p>
-                                    </div>
-                                    <div className="flex items-start gap-3 md:col-span-2">
-                                        <span className="text-red-500 text-2xl">❌</span>
-                                        <p className="text-green-300/90">Miss follow-ups = miss sales (costing you £100s/month)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Solution Section */}
-                        <div className="max-w-5xl mx-auto mb-32 fade-in">
-                            <div className="card p-10 rounded-2xl">
-                                <h2 className="text-4xl lg:text-5xl font-bold text-green-400 mb-8 glow">
-                                    Your AI Intelligence Layer
-                                </h2>
-                                <div className="grid md:grid-cols-2 gap-6 text-lg">
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-green-400 text-2xl">✅</span>
-                                        <p className="text-green-300/90">Track all conversations in one dashboard</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-green-400 text-2xl">✅</span>
-                                        <p className="text-green-300/90">AI scores buyer intent (hot/warm/cold)</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-green-400 text-2xl">✅</span>
-                                        <p className="text-green-300/90">Smart follow-up reminders (never miss a sale)</p>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-green-400 text-2xl">✅</span>
-                                        <p className="text-green-300/90">Analytics that matter (conversion, response times)</p>
-                                    </div>
-                                    <div className="flex items-start gap-3 md:col-span-2">
-                                        <span className="text-green-400 text-2xl">✅</span>
-                                        <p className="text-green-300/90">AI-suggested responses for 3x faster replies</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* How It Works */}
-                        <div className="max-w-5xl mx-auto mb-32 fade-in">
-                            <h2 className="text-4xl lg:text-5xl font-bold text-green-400 mb-16 text-center glow">
-                                How It Works
-                            </h2>
-                            <div className="grid md:grid-cols-3 gap-8">
-                                <div className="card p-8 rounded-xl text-center">
-                                    <div className="text-6xl font-bold text-green-400 mb-4 glow">1</div>
-                                    <h3 className="text-2xl font-bold text-green-400 mb-3">Import</h3>
-                                    <p className="text-green-300/80 leading-relaxed">
-                                        Connect your Messenger conversations or import via CSV
-                                    </p>
-                                </div>
-                                <div className="card p-8 rounded-xl text-center">
-                                    <div className="text-6xl font-bold text-green-400 mb-4 glow">2</div>
-                                    <h3 className="text-2xl font-bold text-green-400 mb-3">Analyze</h3>
-                                    <p className="text-green-300/80 leading-relaxed">
-                                        AI scores every lead and identifies patterns
-                                    </p>
-                                </div>
-                                <div className="card p-8 rounded-xl text-center">
-                                    <div className="text-6xl font-bold text-green-400 mb-4 glow">3</div>
-                                    <h3 className="text-2xl font-bold text-green-400 mb-3">Close</h3>
-                                    <p className="text-green-300/80 leading-relaxed">
-                                        Get reminders, AI replies, and never miss a sale
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Stats Section */}
-                        <div className="max-w-5xl mx-auto mb-32 fade-in">
-                            <div className="card p-10 rounded-2xl">
-                                <div className="grid md:grid-cols-3 gap-8 text-center">
-                                    <div>
-                                        <div className="text-5xl font-bold text-green-400 mb-2 glow">3x</div>
-                                        <p className="text-green-300/80">Faster Response Times</p>
-                                    </div>
-                                    <div>
-                                        <div className="text-5xl font-bold text-green-400 mb-2 glow">40%</div>
-                                        <p className="text-green-300/80">Higher Conversion Rates</p>
-                                    </div>
-                                    <div>
-                                        <div className="text-5xl font-bold text-green-400 mb-2 glow">10h</div>
-                                        <p className="text-green-300/80">Saved Per Week</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Founder Edition CTA */}
-                        <div className="mb-32 fade-in">
-                            <div className="text-center mb-12">
-                                <h2 className="text-5xl lg:text-6xl font-bold text-green-400 mb-6 glow">
-                                    Join the First 20
-                                </h2>
-                                <p className="text-2xl text-green-300 mb-2">
-                                    Get <span className="font-bold text-green-400">£49/month FOREVER</span>
-                                </p>
-                                <p className="text-xl text-green-300/70">
-                                    Normal price: £20/month after launch
-                                </p>
-                            </div>
-                            <FounderSignUpForm />
-                        </div>
-
-                        {/* FAQ Section */}
-                        <div className="max-w-4xl mx-auto mb-32 fade-in">
-                            <h2 className="text-4xl lg:text-5xl font-bold text-green-400 mb-12 text-center glow">
-                                Frequently Asked Questions
-                            </h2>
-                            <div className="card p-8 rounded-2xl">
-                                {faqs.map((faq, index) => (
-                                    <FAQItem key={index} question={faq.question} answer={faq.answer} />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Footer */}
-                        <div className="text-center text-green-300/50 text-sm border-t border-green-500/20 pt-12">
-                            <p className="mb-2">© 2026 VYNTAR. Built for UK Marketplace sellers.</p>
-                            <p>20 years offshore project management experience meets AI-powered intelligence.</p>
+                <!-- Success Message -->
+                <div id="successMessage" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-bold text-green-900">You're on the list!</h4>
+                            <p class="text-sm text-green-700">We'll contact you within 24 hours to set up your account.</p>
                         </div>
                     </div>
                 </div>
-            );
+            </div>
+
+        </div>
+
+        <!-- Social Proof -->
+        <div class="mt-20 text-center">
+            <p class="text-gray-500 mb-4">Trusted by UK Facebook Marketplace sellers</p>
+            <div class="flex justify-center items-center space-x-8 opacity-60">
+                <span class="text-2xl">⭐⭐⭐⭐⭐</span>
+                <span class="text-gray-600">|</span>
+                <span class="font-semibold text-gray-700">4.9/5 Early Access Rating</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600">
+            <p>&copy; 2026 VYNTAR Marketplace Intelligence. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
+        <span id="toastMessage">Error!</span>
+    </div>
+
+    <script>
+        // Initialize Supabase with correct legacy anon key
+        const supabaseUrl = 'https://hfchmjmhkiqsibxtiwsk.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2htam1oa2lxc2lieHRpd3NrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzOTE3MTMsImV4cCI6MjA4Mzk2NzcxM30.ksEGK2s24omNrpJOK_hHt24RsGlI5nPupv83bIdVe_o';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        // Show toast notification
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        // Handle form submission
+        document.getElementById('founderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Submitting...';
+            submitButton.disabled = true;
+            
+            const founderName = document.getElementById('founderName').value;
+            const founderEmail = document.getElementById('founderEmail').value;
+            const founderPhone = document.getElementById('founderPhone').value;
+            const founderMessage = document.getElementById('founderMessage').value;
+            
+            try {
+                const { error } = await supabase
+                    .from('founder_signups')
+                    .insert([{
+                        name: founderName,
+                        email: founderEmail,
+                        phone: founderPhone,
+                        message: founderMessage || null
+                    }]);
+                
+                if (error) throw error;
+                
+                // Show success message
+                document.getElementById('successMessage').classList.remove('hidden');
+                
+                // Hide form
+                e.target.classList.add('hidden');
+                
+                // Track conversion (optional)
+                console.log('Founder signup successful:', founderEmail);
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showToast('Failed to submit. Please try again.', 'error');
+                
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
