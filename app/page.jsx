@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-
 const VyntarSEOLanding = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,72 +9,48 @@ const VyntarSEOLanding = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    const subject = encodeURIComponent(`Agency Access Request - ${formData.agencyName}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nAgency: ${formData.agencyName}\nEmail: ${formData.email}\nWebsite: ${formData.website}\n\nMessage:\n${formData.message}`);
+    window.location.href = `mailto:vyntar@vyntaraiagent.com?subject=${subject}&body=${body}`;
     setIsSubmitted(true);
   };
-
   return (
     <div className="min-h-screen bg-zinc-950 text-slate-100 font-sans">
       <nav className="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="font-mono text-xl font-bold text-green-400">
-              VYNTAR SEO Lead Engine
-            </div>
+            <div className="font-mono text-xl font-bold text-green-400">VYNTAR SEO Lead Engine</div>
             <div className="hidden md:flex space-x-8 items-center">
               <a href="#features" className="text-slate-300 hover:text-green-400 transition-colors">Features</a>
               <a href="#how-it-works" className="text-slate-300 hover:text-green-400 transition-colors">How It Works</a>
               <a href="#contact" className="text-slate-300 hover:text-green-400 transition-colors">Contact</a>
-              <button className="bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-md font-medium transition-colors">
-                Request Sample Leads
-              </button>
+              <button className="bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-md font-medium transition-colors">Request Sample Leads</button>
             </div>
           </div>
         </div>
       </nav>
-
       <section className="relative overflow-hidden pt-20 pb-24">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
-              <span className="text-green-400">AI Lead Discovery</span>
-              <br />
+              <span className="text-green-400">AI Lead Discovery</span><br />
               <span className="text-slate-100">for SEO Agencies</span>
             </h1>
-            <p className="text-2xl text-slate-300 mb-6 font-light">
-              We scan UK businesses for missing SEO signals and generate qualified outreach opportunities for agencies.
-            </p>
-            <p className="text-lg text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-              VYNTAR helps agencies identify businesses with obvious SEO gaps, enriches decision-maker data, and turns those opportunities into outreach-ready leads.
-            </p>
+            <p className="text-2xl text-slate-300 mb-6 font-light">We scan UK businesses for missing SEO signals and generate qualified outreach opportunities for agencies.</p>
+            <p className="text-lg text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed">VYNTAR helps agencies identify businesses with obvious SEO gaps, enriches decision-maker data, and turns those opportunities into outreach-ready leads.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <a href="#contact">
-                <button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg">
-                  Request Sample Leads
-                </button>
-              </a>
-              <a href="#how-it-works">
-                <button className="border border-slate-600 hover:border-slate-400 text-slate-200 px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:bg-slate-800">
-                  See How It Works
-                </button>
-              </a>
+              <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg">Request Sample Leads</button></a>
+              <a href="#how-it-works"><button className="border border-slate-600 hover:border-slate-400 text-slate-200 px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:bg-slate-800">See How It Works</button></a>
             </div>
-            <p className="text-sm text-slate-500 font-mono">
-              Built for agency outreach • UK business data • Outreach-ready lead flow
-            </p>
+            <p className="text-sm text-slate-500 font-mono">Built for agency outreach • UK business data • Outreach-ready lead flow</p>
           </div>
         </div>
       </section>
-
       <section id="how-it-works" className="py-24 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16 text-slate-100">How It Works</h2>
@@ -98,17 +73,12 @@ const VyntarSEOLanding = () => {
           </div>
         </div>
       </section>
-
       <section className="py-24 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
-            <span className="inline-block bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-mono uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-              Live Feed Preview
-            </span>
+            <span className="inline-block bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-mono uppercase tracking-widest px-4 py-2 rounded-full mb-6">Live Feed Preview</span>
             <h2 className="text-4xl font-bold text-slate-100 mb-4">Recent SEO Opportunities Detected</h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              We continuously scan UK businesses for visible SEO gaps and surface qualified opportunities for agency partners.
-            </p>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">We continuously scan UK businesses for visible SEO gaps and surface qualified opportunities for agency partners.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             {[
@@ -153,15 +123,10 @@ const VyntarSEOLanding = () => {
           </div>
           <div className="text-center mt-12">
             <p className="text-slate-400 mb-6 text-lg">Want access to the full opportunity feed?</p>
-            <a href="#contact">
-              <button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20">
-                Request Agency Access
-              </button>
-            </a>
+            <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20">Request Agency Access</button></a>
           </div>
         </div>
       </section>
-
       <section id="features" className="py-24 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16 text-slate-100">Why Agencies Care</h2>
@@ -181,14 +146,11 @@ const VyntarSEOLanding = () => {
           </div>
         </div>
       </section>
-
       <section id="contact" className="py-24 bg-zinc-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6 text-slate-100">Currently Testing With a Small Number of Agencies</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              We're opening the system to a small number of agencies who want access to qualified SEO opportunities from the scans.
-            </p>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">We're opening the system to a small number of agencies who want access to qualified SEO opportunities from the scans.</p>
           </div>
           {!isSubmitted ? (
             <div className="bg-zinc-800 border border-zinc-700 rounded-2xl p-8 max-w-2xl mx-auto">
@@ -196,41 +158,28 @@ const VyntarSEOLanding = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">Name</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleFormChange} required
-                      className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500"
-                      placeholder="Your name" />
+                    <input type="text" name="name" value={formData.name} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="Your name" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">Agency Name</label>
-                    <input type="text" name="agencyName" value={formData.agencyName} onChange={handleFormChange} required
-                      className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500"
-                      placeholder="Your agency" />
+                    <input type="text" name="agencyName" value={formData.agencyName} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="Your agency" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">Work Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleFormChange} required
-                      className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500"
-                      placeholder="your@agency.com" />
+                    <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="your@agency.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">Website</label>
-                    <input type="url" name="website" value={formData.website} onChange={handleFormChange}
-                      className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500"
-                      placeholder="https://youragency.com" />
+                    <input type="url" name="website" value={formData.website} onChange={handleFormChange} className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="https://youragency.com" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">Message</label>
-                  <textarea name="message" value={formData.message} onChange={handleFormChange} rows="4"
-                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500 resize-none"
-                    placeholder="Tell us about your agency and interest in qualified SEO leads..."></textarea>
+                  <textarea name="message" value={formData.message} onChange={handleFormChange} rows="4" className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500 resize-none" placeholder="Tell us about your agency and interest in qualified SEO leads..."></textarea>
                 </div>
-                <button type="submit"
-                  className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg">
-                  Submit Request
-                </button>
+                <button type="submit" className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg">Submit Request</button>
               </form>
             </div>
           ) : (
@@ -246,15 +195,12 @@ const VyntarSEOLanding = () => {
           )}
         </div>
       </section>
-
       <footer className="border-t border-zinc-800 py-12 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="font-mono text-xl font-bold text-green-400 mb-1">VYNTAR SEO Lead Engine</h3>
           <p className="text-slate-500 text-sm font-mono mb-4">by VYNTAR Growth Solutions</p>
           <p className="text-slate-400 mb-2">AI lead discovery for agencies</p>
-          <a href="mailto:vyntar@vyntaraiagent.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">
-            vyntar@vyntaraiagent.com
-          </a>
+          <a href="mailto:vyntar@vyntaraiagent.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">vyntar@vyntaraiagent.com</a>
           <div className="flex justify-center space-x-8 text-sm mt-6 pt-6 border-t border-zinc-800">
             <a href="#features" className="text-slate-400 hover:text-green-400 transition-colors">Features</a>
             <a href="#how-it-works" className="text-slate-400 hover:text-green-400 transition-colors">How It Works</a>
@@ -266,5 +212,4 @@ const VyntarSEOLanding = () => {
     </div>
   );
 };
-
 export default VyntarSEOLanding;
