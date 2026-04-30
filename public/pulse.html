@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VYNTAR Pulse</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --green: #00ffaa; --amber: #f59e0b; --red: #ef4444; --dark: #07111f; --dark2: #0d1e33; --muted: rgba(255,255,255,0.5); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--dark); color: #fff; height: 100vh; overflow: hidden; }
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 18px 88px; opacity: 0; pointer-events: none; transition: opacity 0.5s; overflow-y: auto; overflow-x: hidden; }
+.slide.on { opacity: 1; pointer-events: auto; }
+.nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,17,31,0.96); border-top: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: space-between; padding: 11px 18px; z-index: 99; }
+.nb { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 9px 18px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: inherit; }
+.nb.nx { background: var(--green); color: #000; font-weight: 700; border-color: var(--green); }
+.nm { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.dots { display: flex; gap: 5px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.on { background: var(--green); width: 16px; border-radius: 3px; }
+.ctr { font-size: 11px; color: var(--muted); }
+.badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(0,255,170,0.1); border: 1px solid rgba(0,255,170,0.25); color: var(--green); padding: 5px 14px; border-radius: 100px; font-size: 12px; margin-bottom: 18px; }
+.pd { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+h1 { font-size: clamp(26px, 7vw, 58px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; text-align: center; margin-bottom: 14px; }
+h1 .g { color: var(--green); }
+h2 { font-size: clamp(20px, 5vw, 40px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; text-align: center; }
+.sub { font-size: 14px; color: var(--muted); line-height: 1.6; text-align: center; max-width: 480px; margin-bottom: 22px; }
+.lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+.card { background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; }
+.card h3 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.card .ic { font-size: 22px; margin-bottom: 7px; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; width: 100%; max-width: 560px; }
+.hcard { background: rgba(0,255,170,0.07); border: 1px solid rgba(0,255,170,0.2); border-radius: 14px; padding: 16px; width: 100%; max-width: 560px; }
+.stat { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 12px; padding: 12px 18px; color: var(--amber); font-size: 13px; text-align: center; }
+/* S3 compare */
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; width: 100%; max-width: 560px; }
+.oc { background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; }
+.nc { background: rgba(0,255,170,0.07); border: 1px solid rgba(0,255,170,0.2); border-radius: 14px; padding: 14px; }
+.cl { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 9px; }
+.nc .cl { color: var(--green); }
+.ci { font-size: 12px; color: var(--muted); margin-bottom: 7px; display: flex; gap: 5px; }
+.nc .ci { color: rgba(255,255,255,0.85); }
+.xi { color: var(--red); font-weight: 700; }
+.ck { color: var(--green); font-weight: 700; }
+/* S4 login */
+.lb { background: var(--dark2); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 24px 20px; width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.plo { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.8), rgba(50,20,100,0.9)); border: 1px solid rgba(0,255,170,0.3); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.lt { font-size: 16px; font-weight: 700; text-align: center; }
+.ls { font-size: 11px; color: var(--muted); text-align: center; }
+.inp { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 9px; padding: 10px 13px; color: var(--muted); font-size: 13px; font-family: inherit; }
+.lbn { width: 100%; background: var(--green); border: none; border-radius: 9px; padding: 12px; font-size: 14px; font-weight: 700; color: #000; font-family: inherit; cursor: pointer; }
+.ll { font-size: 11px; color: var(--green); }
+.lp { font-size: 10px; color: rgba(255,255,255,0.2); text-align: center; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 2px; }
+.tag { background: rgba(0,255,170,0.08); border: 1px solid rgba(0,255,170,0.2); color: var(--green); font-size: 11px; padding: 3px 9px; border-radius: 100px; }
+/* S5 checkin */
+.cb { background: #f2f4ff; border-radius: 22px; padding: 20px 18px; width: 100%; max-width: 320px; color: #1a1a2e; }
+.pb { height: 4px; background: #dde; border-radius: 2px; margin-bottom: 14px; }
+.pf { height: 100%; width: 16%; background: #3b5bdb; border-radius: 2px; }
+.ql { font-size: 10px; color: #888; text-align: center; margin-bottom: 10px; }
+.qi { font-size: 26px; text-align: center; margin-bottom: 8px; }
+.qt { font-size: 16px; font-weight: 700; text-align: center; color: #1a1a2e; margin-bottom: 14px; line-height: 1.3; }
+.rbts { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.rb { width: 40px; height: 40px; border-radius: 50%; border: none; background: #dde3f0; font-weight: 700; font-size: 14px; color: #555; display: flex; align-items: center; justify-content: center; }
+.rb.s { background: #3b5bdb; color: #fff; }
+.rl { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.qd { background: rgba(59,91,219,0.08); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #444; text-align: center; margin-bottom: 12px; }
+.qn { width: 100%; background: #3b5bdb; color: #fff; border: none; border-radius: 9px; padding: 11px; font-weight: 700; font-size: 13px; font-family: inherit; cursor: pointer; }
+.qa { font-size: 10px; color: #888; text-align: center; margin-top: 8px; }
+.privacy-note { background: rgba(0,255,170,0.08); border: 1px solid rgba(0,255,170,0.2); border-radius: 10px; padding: 9px 14px; font-size: 12px; color: rgba(255,255,255,0.85); text-align: center; margin-top: 12px; max-width: 320px; width: 100%; }
+/* S6 dashboard */
+.db { background: #fff; border-radius: 22px; padding: 18px 16px; width: 100%; max-width: 320px; color: #1a1a2e; }
+.dbh { color: #3b5bdb; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+.dbs { font-size: 11px; color: #888; margin-bottom: 12px; }
+.wg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 12px; }
+.wt { background: #f5f7ff; border-radius: 9px; padding: 7px; text-align: center; }
+.wl { font-size: 9px; color: #888; margin-bottom: 2px; }
+.wv { font-size: 15px; font-weight: 800; color: #1a1a2e; }
+.dct { font-size: 12px; font-weight: 700; margin-bottom: 7px; }
+.dcr { background: #f5f7ff; border-radius: 9px; padding: 7px 9px; margin-bottom: 5px; }
+.dwk { font-size: 9px; color: #888; margin-bottom: 4px; }
+.pls { display: flex; gap: 3px; }
+.pl { width: 20px; height: 20px; border-radius: 50%; background: #4ade80; color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pl.r { background: #ef4444; }
+/* S7 manager */
+.sw { width: 100%; max-width: 520px; }
+.swh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.swh h3 { font-size: 17px; font-weight: 700; }
+.at { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: var(--amber); padding: 4px 11px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+.dr { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.dn { font-size: 12px; color: var(--muted); min-width: 74px; }
+.bw { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.bf { height: 100%; border-radius: 3px; }
+.bf.g { background: var(--green); width: 28%; }
+.bf.a { background: var(--amber); width: 68%; }
+.bf.r { background: var(--red); width: 91%; }
+.tg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-top: 10px; }
+.tc { background: var(--dark2); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; text-align: center; }
+.ts { font-size: 14px; font-weight: 800; margin-bottom: 3px; }
+.ts.g { color: var(--green); }
+.ts.a { color: var(--amber); }
+.ts.r { color: var(--red); }
+.tl { font-size: 10px; color: var(--muted); }
+.ins { background: rgba(0,255,170,0.06); border: 1px solid rgba(0,255,170,0.15); border-radius: 11px; padding: 12px; font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 10px; line-height: 1.5; }
+/* S8 partners */
+.pg { display: grid; grid-template-columns: 1fr; gap: 9px; width: 100%; max-width: 520px; }
+@media(min-width:480px){ .pg { grid-template-columns: 1fr 1fr 1fr; } }
+.pc { background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px; }
+.pi { font-size: 24px; margin-bottom: 7px; }
+.pc h3 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.pc p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.ch { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 7px; background: rgba(0,255,170,0.06); border: 1px solid rgba(0,255,170,0.15); border-radius: 12px; padding: 12px; margin-top: 12px; width: 100%; max-width: 520px; }
+.cn { text-align: center; }
+.cn strong { display: block; font-size: 13px; text-align: center; }
+.cn span { font-size: 10px; color: var(--muted); }
+.ca { color: var(--green); font-size: 16px; }
+/* S9 CTA */
+.s9bg { background: radial-gradient(ellipse at 50% 60%, rgba(0,255,170,0.09) 0%, transparent 50%), var(--dark); }
+.ctb { text-align: center; max-width: 520px; width: 100%; }
+.ctb h2 { margin-bottom: 14px; }
+.ctb h2 span { color: var(--green); }
+.ctb p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+.cbtns { display: flex; flex-direction: column; gap: 9px; align-items: center; }
+.cbtn { display: block; background: var(--green); color: #000; font-weight: 700; font-size: 15px; padding: 14px 32px; border-radius: 100px; text-decoration: none; width: 100%; max-width: 260px; text-align: center; }
+.cbtno { display: block; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 14px; padding: 13px 32px; border-radius: 100px; text-decoration: none; width: 100%; max-width: 260px; text-align: center; }
+.ctc { margin-top: 18px; font-size: 12px; color: var(--muted); }
+.ctc strong { color: var(--green); }
+/* Mobile: stack comparison grid on very small screens */
+@media(max-width:360px) {
+  .cmp { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<div class="slide on" id="s1" style="background:radial-gradient(ellipse at 30% 40%, rgba(0,255,170,0.07) 0%, transparent 50%), var(--dark)">
+  <div class="badge"><div class="pd"></div> VYNTAR Pulse - Workforce Pressure Intelligence</div>
+  <h1>Most companies track performance.<br><span class="g">Very few track pressure.</span></h1>
+  <p class="sub">Real-time workforce pressure monitoring - built by someone who's spent 20+ years in environments where what you can't see can cost lives.</p>
+  <div class="stat">⚠️ <strong>22 million working days</strong> are lost to stress every year in the UK</div>
+</div>
+
+<div class="slide" id="s2" style="background:radial-gradient(ellipse at 70% 70%, rgba(239,68,68,0.06) 0%, transparent 50%), var(--dark)">
+  <div class="lbl">The Problem</div>
+  <h2>The problem isn't stress.<br>It's not seeing it early enough.</h2>
+  <div class="g2">
+    <div class="card"><div class="ic">📈</div><h3>Workload Increases</h3><p>Pressure builds quietly. No alerts. No visibility. No action.</p></div>
+    <div class="card"><div class="ic">🔋</div><h3>Energy Drops</h3><p>Stress fluctuates week on week - but nobody sees the pattern forming.</p></div>
+    <div class="card"><div class="ic">🏥</div><h3>Absence Rises</h3><p>By the time it shows up as sick days, the damage is already done.</p></div>
+    <div class="card"><div class="ic">🚪</div><h3>People Leave</h3><p>Burnout, mistakes, disengagement. All predictable. Rarely predicted.</p></div>
+  </div>
+  <div class="hcard" style="margin-top:10px">
+    <div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:5px">By the time it's visible... it's already cost the business.</div>
+    <div style="font-size:12px;color:var(--muted)">Pressure doesn't show up overnight. It builds quietly - and most businesses have no system to catch it before it lands.</div>
+  </div>
+</div>
+
+<div class="slide" id="s3" style="background:radial-gradient(ellipse at 30% 30%, rgba(0,255,170,0.06) 0%, transparent 50%), var(--dark)">
+  <div class="lbl">The Shift</div>
+  <h2>Most businesses manage wellbeing.<br>Very few manage pressure.</h2>
+  <div class="cmp">
+    <div class="oc">
+      <div class="cl">❌ Old Model</div>
+      <div class="ci"><span class="xi">✕</span> Annual risk assessments</div>
+      <div class="ci"><span class="xi">✕</span> HR finds out after absence</div>
+      <div class="ci"><span class="xi">✕</span> Generic reports</div>
+      <div class="ci"><span class="xi">✕</span> Reactive - too late</div>
+    </div>
+    <div class="nc">
+      <div class="cl">✅ VYNTAR Pulse</div>
+      <div class="ci"><span class="ck">✓</span> Continuous pressure signals</div>
+      <div class="ci"><span class="ck">✓</span> Early warning before escalation</div>
+      <div class="ci"><span class="ck">✓</span> Real-time GREEN / AMBER / RED</div>
+      <div class="ci"><span class="ck">✓</span> Proactive - act before the cost</div>
+    </div>
+  </div>
+  <div class="hcard" style="margin-top:10px;text-align:center">
+    <div style="font-size:14px;font-weight:700;margin-bottom:4px">This isn't another wellbeing tool.</div>
+    <div style="font-size:12px;color:var(--muted)">It's an early warning system for workforce risk. Wellbeing programmes exist. Support exists. Policies exist. But they all rely on one thing: knowing when there's a problem. Most businesses don't.</div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <div class="lbl">The App</div>
+  <h2 style="font-size:clamp(18px,5vw,34px)">Simple for employees.<br>Powerful for managers.</h2>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;text-align:center">Access via any browser. No app download. Anonymous. 90 seconds per week.</p>
+  <div class="tags" style="margin-bottom:14px">
+    <span class="tag">📱 Mobile-first</span>
+    <span class="tag">🔒 Anonymous</span>
+    <span class="tag">⚡ 90 sec/week</span>
+    <span class="tag">🌐 No install</span>
+  </div>
+  <div class="lb">
+    <div class="plo">⚡</div>
+    <div class="lt">Workforce Pulse Monitoring</div>
+    <div class="ls">Early warning for workforce pressure</div>
+    <input class="inp" type="text" placeholder="your.email@company.com" readonly>
+    <input class="inp" type="password" value="••••••••" readonly>
+    <button class="lbn">Sign In</button>
+    <div class="ll">Don't have an account? Sign Up</div>
+    <div class="lp">Powered by Vyntar Growth Solutions</div>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <div class="lbl">Employee Check-In</div>
+  <h2 style="font-size:clamp(18px,5vw,34px)">6 questions. 90 seconds.</h2>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px;text-align:center">Energy · Stress · Emotional · Work-Life · Supported · Satisfaction</p>
+  <div class="cb">
+    <div class="pb"><div class="pf"></div></div>
+    <div class="ql">Question 1 of 6</div>
+    <div class="qi">&#x1F50B;</div>
+    <div class="qt">How would you describe your energy levels this week?</div>
+    <div class="rbts">
+      <div class="rb">1</div><div class="rb">2</div><div class="rb s">3</div><div class="rb">4</div><div class="rb">5</div>
+    </div>
+    <div class="rl"><span>Low</span><span>High</span></div>
+    <div class="qd">Managing, but often feel tired</div>
+    <button class="qn">Next</button>
+    <div class="qa">Responses are anonymous</div>
+  </div>
+  <div class="privacy-note">🔒 Managers see team-level trends, not personal responses.</div>
+</div>
+
+<div class="slide" id="s6">
+  <div class="lbl">Employee Dashboard</div>
+  <h2 style="font-size:clamp(18px,5vw,32px)">Personal wellness tracked<br>week by week.</h2>
+  <div class="db">
+    <div class="dbh">Workplace Wellbeing</div>
+    <div class="dbs">My Wellness Overview</div>
+    <div class="wg">
+      <div class="wt"><div class="wl">Energy</div><div class="wv">5.0/5</div></div>
+      <div class="wt"><div class="wl">Stress</div><div class="wv" style="color:#ef4444">2.7/5</div></div>
+      <div class="wt"><div class="wl">Emotional</div><div class="wv">4.3/5</div></div>
+      <div class="wt"><div class="wl">Work-Life</div><div class="wv">4.3/5</div></div>
+      <div class="wt"><div class="wl">Supported</div><div class="wv">4.7/5</div></div>
+      <div class="wt"><div class="wl">Satisfaction</div><div class="wv">4.7/5</div></div>
+    </div>
+    <div class="dct">Recent Check-Ins</div>
+    <div class="dcr"><div class="dwk">Week of 01/02/2026</div><div class="pls"><div class="pl">5</div><div class="pl" style="background:#22c55e">1</div><div class="pl">4</div><div class="pl">4</div><div class="pl">4</div><div class="pl">4</div></div></div>
+    <div class="dcr"><div class="dwk">Week of 18/01/2026</div><div class="pls"><div class="pl">5</div><div class="pl r">5</div><div class="pl">5</div><div class="pl">5</div><div class="pl">5</div><div class="pl">5</div></div></div>
+    <div class="dcr"><div class="dwk">Week of 11/01/2026</div><div class="pls"><div class="pl">5</div><div class="pl" style="background:#22c55e">2</div><div class="pl">4</div><div class="pl">4</div><div class="pl">5</div><div class="pl">5</div></div></div>
+  </div>
+</div>
+
+<div class="slide" id="s7" style="background:radial-gradient(ellipse at 60% 50%, rgba(245,158,11,0.06) 0%, transparent 50%), var(--dark)">
+  <div class="lbl">Manager Dashboard</div>
+  <div class="sw">
+    <div class="card" style="margin-bottom:10px">
+      <div class="swh"><h3>Live Workforce Status</h3><div class="at">⚠ AMBER</div></div>
+      <div class="dr"><div class="dn">Operations</div><div class="bw"><div class="bf a"></div></div><div style="font-size:11px;color:var(--amber)">+23%</div></div>
+      <div class="dr"><div class="dn">Production</div><div class="bw"><div class="bf r"></div></div><div style="font-size:11px;color:var(--red)">HIGH</div></div>
+      <div class="dr"><div class="dn">Admin</div><div class="bw"><div class="bf g"></div></div><div style="font-size:11px;color:var(--green)">STABLE</div></div>
+    </div>
+    <div class="tg">
+      <div class="tc"><div class="ts g">GREEN</div><div class="tl">Team A - Stable</div></div>
+      <div class="tc"><div class="ts a">AMBER</div><div class="tl">Team B - Warning</div></div>
+      <div class="tc"><div class="ts r">RED</div><div class="tl">Team C - Act now</div></div>
+    </div>
+    <div class="ins"><strong>System Insight:</strong> Pressure building in one key department. If ignored, may lead to increased absence, reduced output, and higher turnover risk.</div>
+  </div>
+</div>
+
+<div class="slide" id="s8" style="background:radial-gradient(ellipse at 50% 20%, rgba(124,58,237,0.08) 0%, transparent 50%), var(--dark)">
+  <div class="lbl">Partnership Opportunity</div>
+  <h2 style="font-size:clamp(18px,5vw,36px)">The early warning layer<br>others are missing.</h2>
+  <div class="pg">
+    <div class="pc"><div class="pi">🏥</div><h3>Occupational Health</h3><p>Pulse catches signals before they become EAP referrals.</p></div>
+    <div class="pc"><div class="pi">💷</div><h3>Financial Wellbeing</h3><p>Financial stress drives workforce pressure. Pulse catches it daily.</p></div>
+    <div class="pc"><div class="pi">🛡️</div><h3>HSE Consultants</h3><p>Stress is the #1 UK work-related ill health cause. Pulse provides the evidence trail.</p></div>
+  </div>
+  <div class="ch">
+    <div class="cn"><strong>Pulse</strong><span>Detects signals</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn"><strong>Partner</strong><span>Intervenes</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn"><strong>Employer</strong><span>Saves cost</span></div>
+    <div class="ca">&rarr;</div>
+    <div class="cn"><strong>Employees</strong><span>Thrive &amp; stay</span></div>
+  </div>
+</div>
+
+<div class="slide s9bg" id="s9">
+  <div class="ctb">
+    <div class="lbl" style="text-align:center;margin-bottom:14px">Early-Stage Rollout</div>
+    <h2>If you can't see pressure,<br><span>you can't control it.</span></h2>
+    <p>Most businesses don't realise there's a problem until it shows up as absence, burnout, or mistakes. By then - it's already costing time, money, and performance. VYNTAR Pulse gives you early visibility so you can act before the damage is done.</p>
+    <p style="font-size:12px;color:var(--amber);margin-bottom:20px;font-weight:600;">Currently in early-stage rollout - working with a small number of teams to refine the system in real environments.</p>
+    <div class="cbtns">
+      <a href="mailto:dave@vyntarpulse.com" class="cbtn">👉 Book a Pilot Demo</a>
+      <a href="https://vyntarpulse.com" class="cbtno" target="_blank" rel="noopener noreferrer">👉 View Live Demo</a>
+    </div>
+    <div class="ctc" style="margin-top:20px;font-size:11px;">Built by someone with 20+ years in high-risk environments where what you can't see can cost lives.</div>
+    <div class="ctc"><strong>vyntarpulse.com</strong> &nbsp;|&nbsp; dave@vyntarpulse.com<br><span>VYNTAR Growth Solutions - Widnes, UK</span></div>
+  </div>
+</div>
+
+</div>
+<div class="nav">
+  <button class="nb" onclick="go(-1)">&larr; Prev</button>
+  <div class="nm"><div class="dots" id="dots"></div><div class="ctr" id="ctr">1 / 9</div></div>
+  <button class="nb nx" onclick="go(1)">Next &rarr;</button>
+</div>
+<script>
+const total=9; let cur=1;
+function buildDots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=1;i<=total;i++){const el=document.createElement('div');el.className='dot'+(i===cur?' on':'');el.onclick=()=>jump(i);d.appendChild(el);}document.getElementById('ctr').textContent=cur+' / '+total;}
+function jump(n){document.getElementById('s'+cur).classList.remove('on');cur=Math.max(1,Math.min(total,n));const s=document.getElementById('s'+cur);s.classList.add('on');s.scrollTop=0;buildDots();}
+function go(d){jump(cur+d);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);});
+let tx=0;
+document.querySelector('.deck').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.querySelector('.deck').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){go(dx<0?1:-1);}},{passive:true});
+buildDots();
+</script>
+</body>
+</html>
