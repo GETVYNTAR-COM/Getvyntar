@@ -16,7 +16,7 @@ const VyntarSEOLanding = () => {
     e.preventDefault();
     const subject = encodeURIComponent(`Agency Access Request - ${formData.agencyName}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nAgency: ${formData.agencyName}\nEmail: ${formData.email}\nWebsite: ${formData.website}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:vyntar@vyntaraiagent.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:dave@vyntarseo.com?subject=${subject}&body=${body}`;
     setIsSubmitted(true);
   };
   return (
@@ -200,7 +200,7 @@ const VyntarSEOLanding = () => {
           <h3 className="font-mono text-xl font-bold text-green-400 mb-1">VYNTAR SEO Lead Engine</h3>
           <p className="text-slate-500 text-sm font-mono mb-4">by VYNTAR Growth Solutions</p>
           <p className="text-slate-400 mb-2">AI lead discovery for agencies</p>
-          <a href="mailto:vyntar@vyntaraiagent.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">vyntar@vyntaraiagent.com</a>
+          <a href="mailto:dave@vyntarseo.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">dave@vyntarseo.com</a>
           <div className="flex justify-center space-x-8 text-sm mt-6 pt-6 border-t border-zinc-800">
             <a href="#features" className="text-slate-400 hover:text-green-400 transition-colors">Features</a>
             <a href="#how-it-works" className="text-slate-400 hover:text-green-400 transition-colors">How It Works</a>
