@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'VYNTAR SEO Lead Engine',
-  description: 'AI lead discovery for SEO agencies',
+  title: 'VYNTAR - Get Found on Google | Local Business Visibility',
+  description: 'We help local businesses get found by the people already searching for them. More customers find you, trust you, and choose you.',
 }
 
 export default function RootLayout({ children }) {
