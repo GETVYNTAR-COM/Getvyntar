@@ -21,7 +21,7 @@ const VyntarLanding = () => {
     const body = encodeURIComponent(
       `Name: ${formData.name}\nBusiness: ${formData.businessName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nWebsite: ${formData.website}`
     );
-    window.location.href = `mailto:dave@vyntarseo.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:audits@vyntarseo.com?subject=${subject}&body=${body}`;
     setIsSubmitted(true);
   };
 
@@ -226,7 +226,7 @@ const VyntarLanding = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="font-mono text-xl font-bold text-green-400 mb-1">VYNTAR</h3>
           <p className="text-slate-500 text-sm font-mono mb-4">Local visibility, proven results.</p>
-          <a href="mailto:dave@vyntarseo.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">dave@vyntarseo.com</a>
+          <a href="mailto:audits@vyntarseo.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">audits@vyntarseo.com</a>
           <div className="flex justify-center space-x-8 text-sm mt-6 pt-6 border-t border-zinc-800">
             <a href="#results" className="text-slate-400 hover:text-green-400 transition-colors">Results</a>
             <a href="#how-it-works" className="text-slate-400 hover:text-green-400 transition-colors">How It Works</a>
