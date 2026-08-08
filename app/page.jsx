@@ -43,7 +43,7 @@ const VyntarLanding = () => {
               <a href="#results" className="text-slate-300 hover:text-green-400 transition-colors">Results</a>
               <a href="#how-it-works" className="text-slate-300 hover:text-green-400 transition-colors">How It Works</a>
               <a href="#contact" className="text-slate-300 hover:text-green-400 transition-colors">Contact</a>
-              <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-md font-medium transition-colors">Get My Free Visibility Audit</button></a>
+              <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-md font-medium transition-colors">Get My Free Visibility Scan</button></a>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@ const VyntarLanding = () => {
             <p className="text-xl md:text-2xl text-slate-300 mb-6 font-light">We help local businesses get found by the people already searching for them — so more customers find you, trust you, and choose you.</p>
             <p className="text-lg text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">Make the Invisible Visible.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20">Get My Free Visibility Audit</button></a>
+              <a href="#contact"><button className="bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20">Get My Free Visibility Scan</button></a>
               <a href="#results"><button className="border border-slate-600 hover:border-slate-400 text-slate-200 px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:bg-slate-800">See how Outback increased their visibility</button></a>
             </div>
           </div>
@@ -173,7 +173,7 @@ const VyntarLanding = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-100">Ready to stop losing customers you never knew you were missing?</h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto">Request your free visibility audit. We&rsquo;ll show you exactly where your business stands and what&rsquo;s holding you back.</p>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto">Request your free visibility scan. We&rsquo;ll show you exactly where your business stands and what&rsquo;s holding you back.</p>
           </div>
           {!isSubmitted ? (
             <div className="bg-zinc-800 border border-zinc-700 rounded-2xl p-8 max-w-2xl mx-auto">
@@ -202,7 +202,7 @@ const VyntarLanding = () => {
                   <label className="block text-sm font-medium text-slate-300 mb-2">Website (optional)</label>
                   <input type="url" name="website" value={formData.website} onChange={handleFormChange} className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="https://yourbusiness.com" />
                 </div>
-                <button type="submit" disabled={isSubmitting} className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20 disabled:opacity-60 disabled:cursor-not-allowed">{isSubmitting ? 'Sending...' : 'Get My Free Visibility Audit'}</button>
+                <button type="submit" disabled={isSubmitting} className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20 disabled:opacity-60 disabled:cursor-not-allowed">{isSubmitting ? 'Sending...' : 'Get My Free Visibility Scan'}</button>
               </form>
             </div>
           ) : (
@@ -213,7 +213,7 @@ const VyntarLanding = () => {
                 </svg>
               </div>
               <h3 className="text-2xl font-semibold mb-2 text-slate-100">Request Received</h3>
-              <p className="text-slate-300">We&rsquo;ll review your details and send your free visibility audit within 24 hours.</p>
+              <p className="text-slate-300">We&rsquo;ll review your details and send your free visibility scan within 24 hours.</p>
             </div>
           )}
         </div>
@@ -223,7 +223,7 @@ const VyntarLanding = () => {
       <section className="py-12 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-slate-400">Are you a marketing agency? We also licence the VYNTAR platform to selected agencies. <a href="mailto:audits@vyntarseo.com?subject=Agency%20Enquiry" className="text-green-400 hover:text-green-300 transition-colors font-medium">Get in touch</a></p>
+            <p className="text-slate-400">Are you a marketing agency? We also licence the VYNTAR platform to selected agencies. <a href="mailto:dave@vyntarseo.com?subject=Agency%20Enquiry" className="text-green-400 hover:text-green-300 transition-colors font-medium">Get in touch</a></p>
           </div>
         </div>
       </section>
@@ -233,7 +233,7 @@ const VyntarLanding = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="font-mono text-xl font-bold text-green-400 mb-1">VYNTAR</h3>
           <p className="text-slate-500 text-sm font-mono mb-4">Local visibility, proven results.</p>
-          <a href="mailto:audits@vyntarseo.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">audits@vyntarseo.com</a>
+          <a href="mailto:dave@vyntarseo.com" className="text-green-400 hover:text-green-300 transition-colors text-sm font-mono inline-block mb-6">dave@vyntarseo.com</a>
           <div className="flex justify-center space-x-8 text-sm mt-6 pt-6 border-t border-zinc-800">
             <a href="#results" className="text-slate-400 hover:text-green-400 transition-colors">Results</a>
             <a href="#how-it-works" className="text-slate-400 hover:text-green-400 transition-colors">How It Works</a>
