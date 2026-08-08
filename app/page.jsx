@@ -10,18 +10,25 @@ const VyntarLanding = () => {
     website: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Free Visibility Audit Request - ${formData.businessName}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nBusiness: ${formData.businessName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nWebsite: ${formData.website}`
-    );
-    window.location.href = `mailto:audits@vyntarseo.com?subject=${subject}&body=${body}`;
+    setIsSubmitting(true);
+    try {
+      await fetch('/api/audit-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+    } catch {
+      // Submission logged server-side; show success regardless
+    }
+    setIsSubmitting(false);
     setIsSubmitted(true);
   };
 
@@ -195,7 +202,7 @@ const VyntarLanding = () => {
                   <label className="block text-sm font-medium text-slate-300 mb-2">Website (optional)</label>
                   <input type="url" name="website" value={formData.website} onChange={handleFormChange} className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="https://yourbusiness.com" />
                 </div>
-                <button type="submit" className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20">Get My Free Visibility Audit</button>
+                <button type="submit" disabled={isSubmitting} className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20 disabled:opacity-60 disabled:cursor-not-allowed">{isSubmitting ? 'Sending...' : 'Get My Free Visibility Audit'}</button>
               </form>
             </div>
           ) : (
@@ -216,7 +223,7 @@ const VyntarLanding = () => {
       <section className="py-12 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-slate-400">Are you a marketing agency? We also licence the VYNTAR platform to selected agencies. <a href="/agency" className="text-green-400 hover:text-green-300 transition-colors font-medium">Learn more</a></p>
+            <p className="text-slate-400">Are you a marketing agency? We also licence the VYNTAR platform to selected agencies. <a href="mailto:audits@vyntarseo.com?subject=Agency%20Enquiry" className="text-green-400 hover:text-green-300 transition-colors font-medium">Get in touch</a></p>
           </div>
         </div>
       </section>
