@@ -1,7 +1,7 @@
 import Script from 'next/script'
 import './globals.css'
 
-const GA_ID = 'G-WZJ6M801MB'
+const GA_ID = 'G-RWVHRTDE2Q'
 
 export const metadata = {
   title: 'VYNTAR - Get Found on Google | Free Visibility Scan',
