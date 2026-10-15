@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const VyntarLanding = () => {
   const [formData, setFormData] = useState({
@@ -8,9 +8,19 @@ const VyntarLanding = () => {
     email: '',
     phone: '',
     website: '',
+    town: '',
+    mainService: '',
+    source: '',
+    _hp: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get('src');
+    if (src) setFormData((prev) => ({ ...prev, source: src }));
+  }, []);
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -190,6 +200,16 @@ const VyntarLanding = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Town / City</label>
+                    <input type="text" name="town" value={formData.town} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="e.g. Manchester" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Main service customers search for</label>
+                    <input type="text" name="mainService" value={formData.mainService} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="e.g. Garden design" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
                     <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="you@yourbusiness.com" />
                   </div>
@@ -202,6 +222,11 @@ const VyntarLanding = () => {
                   <label className="block text-sm font-medium text-slate-300 mb-2">Website (optional)</label>
                   <input type="url" name="website" value={formData.website} onChange={handleFormChange} className="w-full px-4 py-3 bg-zinc-900 border border-zinc-600 rounded-lg text-slate-100 placeholder-slate-500" placeholder="https://yourbusiness.com" />
                 </div>
+                <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+                  <label htmlFor="company_url">Leave blank</label>
+                  <input type="text" id="company_url" name="_hp" value={formData._hp} onChange={handleFormChange} tabIndex={-1} autoComplete="off" />
+                </div>
+                <input type="hidden" name="source" value={formData.source} />
                 <button type="submit" disabled={isSubmitting} className="w-full bg-green-500 hover:bg-green-400 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-green-500/20 disabled:opacity-60 disabled:cursor-not-allowed">{isSubmitting ? 'Sending...' : 'Get My Free Visibility Scan'}</button>
               </form>
             </div>
