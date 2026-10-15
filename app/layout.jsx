@@ -2,7 +2,7 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
-const GA_ID = 'G-RWVHRTDE2Q'
+const GA_ID = 'G-WZJ6M801MB'
 
 export const metadata = {
   title: 'VYNTAR - Get Found on Google | Free Visibility Scan',
